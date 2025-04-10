@@ -15,7 +15,8 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
-  bool _obscureText = true;
+  bool _obscurePass = true;
+  bool _obscureConfPass = true;
 
   Widget _inputEmail ({
     required String text,
@@ -37,7 +38,7 @@ class _FirstScreenState extends State<FirstScreen> {
             fontSize: 16
           ),
           decoration: InputDecoration(
-            hintText: hintText,
+            hintText: hintText, 
             hintStyle: TextStyle(
               color: Colors.grey
             ),
@@ -53,6 +54,8 @@ class _FirstScreenState extends State<FirstScreen> {
   Widget _inputPassword ({
     required String text,
     required String hintText,
+    required bool obscureText,
+    required VoidCallback toggleVisibility,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +68,7 @@ class _FirstScreenState extends State<FirstScreen> {
         ),
         SizedBox(height: 5),
         TextField(
-          obscureText: _obscureText,
+          obscureText : obscureText,
           style: TextStyle(
             color: Colors.black,
             fontSize: 16,
@@ -80,13 +83,9 @@ class _FirstScreenState extends State<FirstScreen> {
             ),
             suffixIcon: IconButton(
               icon: Icon(
-                _obscureText ? Icons.visibility : Icons.visibility_off,
+                obscureText ? Icons.visibility : Icons.visibility_off,
               ),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              }, 
+              onPressed: toggleVisibility,
             ),
           ),
         )
@@ -198,7 +197,16 @@ class _FirstScreenState extends State<FirstScreen> {
                         _inputEmail(text: 'Email address', hintText: 'Your Email'),
           
                         SizedBox(height: 20),
-                        _inputPassword(text: 'Password', hintText: 'Password'),
+                        _inputPassword(
+                          text: 'Password', 
+                          hintText: 'Password', 
+                          obscureText: _obscurePass, 
+                          toggleVisibility: () {
+                            setState(() {
+                              _obscurePass = !_obscurePass;
+                            });
+                          }
+                        ),
           
                         SizedBox(height: 10),
                         Row(
@@ -235,15 +243,36 @@ class _FirstScreenState extends State<FirstScreen> {
                     )
                   : Column(
                       children: [
+                        _inputEmail(text: 'Name', hintText: 'Input your name'),
+
+                        SizedBox(height: 20),
                         _inputEmail(text: 'Email', hintText: 'example@gmail.com'),
             
                         SizedBox(height: 20),
-                        _inputPassword(text: 'Create a password', hintText: 'must be 8 characters'),
+                        _inputPassword(
+                          text: 'Create a password', 
+                          hintText: 'must be 8 characters', 
+                          obscureText: _obscurePass, 
+                          toggleVisibility: () {
+                            setState(() {
+                              _obscurePass = !_obscurePass;
+                            });
+                          }
+                        ),
             
                         SizedBox(height: 20),
-                        _inputPassword(text: 'Confirm password', hintText: 'repeat password'),
+                        _inputPassword(
+                          text: 'Confirm password', 
+                          hintText: 'repeat password', 
+                          obscureText: _obscureConfPass, 
+                          toggleVisibility: () {
+                            setState(() {
+                              _obscureConfPass = !_obscureConfPass;
+                            });
+                          }
+                        ),
 
-                        SizedBox(height: 120),
+                        SizedBox(height: 35),
                         Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -253,7 +282,9 @@ class _FirstScreenState extends State<FirstScreen> {
                                 borderRadius: BorderRadius.circular(17), 
                               ),
                             ),
-                            onPressed: () {}, 
+                            onPressed: () {
+                              widget.onChanged?.call(true);
+                            }, 
                             child: Text(
                               'Register',
                               style: TextStyle(
