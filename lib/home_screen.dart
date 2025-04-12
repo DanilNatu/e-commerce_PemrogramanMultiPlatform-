@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project2/detail.dart';
 import 'package:project2/keranjang.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final List<Map<String, String>> products = [
     {
       'title': 'Kaos Polos',
@@ -24,10 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
-  Widget kategoriItem(
-    String image, 
-    String title
-  ) {
+  Widget kategoriItem(String image, String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
@@ -57,8 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => // detail.dart
-          ),
+          MaterialPageRoute(builder: (context) => ProductDetailPage()),
         );
       },
       child: Container(
@@ -76,25 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Image.network(
-                  imageUrl, 
-                  height: 100, 
-                  fit: BoxFit.cover
-                ),
+                child: Image.network(imageUrl, height: 100, fit: BoxFit.cover),
               ),
             ),
-
             const SizedBox(height: 5),
-            Text(
-              title, 
-              style: const TextStyle(fontWeight: FontWeight.bold)
-            ),
-
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 3),
-            Text(
-              price, 
-              style: const TextStyle(color: Colors.black54)
-            ),
+            Text(price, style: const TextStyle(color: Colors.black54)),
           ],
         ),
       ),
@@ -108,10 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                top: 7,
-                right: 10
-              ),
+              padding: const EdgeInsets.only(top: 7, right: 10),
               child: Row(
                 children: [
                   Image.asset(
@@ -150,11 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 15,
-                    bottom: 15,
-                    right: 15
-                  ),
+                  padding:
+                      const EdgeInsets.only(left: 15, bottom: 15, right: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -166,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 1),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Row(
@@ -190,7 +169,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 1),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Row(
@@ -223,7 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
@@ -237,8 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 20),
                       const Text(
                         'Kategori',
-                        style:
-                            TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 15),
                       SingleChildScrollView(
@@ -256,8 +235,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 20),
                       const Text(
                         'Product',
-                        style:
-                            TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 15),
                       GridView.builder(
@@ -289,7 +268,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-
       bottomNavigationBar: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -301,14 +279,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => KeranjangScreen()
-                        )
-                      );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => KeranjangScreen()));
                     },
                     child: const Icon(Icons.shopping_cart),
                   ),
                 ),
-
                 Expanded(
                   child: GestureDetector(
                     onTap: () {},
@@ -318,7 +296,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-
           Positioned(
             top: -25,
             left: 0,
@@ -331,21 +308,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   shape: BoxShape.circle,
                   color: Colors.black,
                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26, 
-                      blurRadius: 8
-                    ),
+                    BoxShadow(color: Colors.black26, blurRadius: 8),
                   ],
                 ),
-                child: const Icon(
-                  Icons.home, 
-                  color: Colors.white
-                ), 
+                child: const Icon(Icons.home, color: Colors.white),
               ),
             ),
           )
         ],
-      ),   
+      ),
     );
   }
 }
