@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project2/keranjang.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -300,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => //keranjang.dart
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => KeranjangScreen()
                         )
                       );
                     },
