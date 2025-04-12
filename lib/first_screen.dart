@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project2/home_screen.dart';
 
 class FirstScreen extends StatefulWidget {
   final Function(bool)? onChanged;
@@ -223,13 +224,21 @@ class _FirstScreenState extends State<FirstScreen> {
                         Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 107, 125, 214),
+                              backgroundColor: const Color.fromARGB(255, 123, 138, 215),
                               minimumSize: Size(330, 45),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(17), 
                               ),
                             ),
-                            onPressed: () {}, 
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => HomeScreen())
+                                ),
+                                (route) => false
+                              );
+                            },
                             child: Text(
                               'Log IN',
                               style: TextStyle(
@@ -276,7 +285,7 @@ class _FirstScreenState extends State<FirstScreen> {
                         Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 107, 125, 214),
+                              backgroundColor: const Color.fromARGB(255, 123, 138, 215),
                               minimumSize: Size(330, 45),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(17), 
