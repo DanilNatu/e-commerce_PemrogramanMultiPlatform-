@@ -5,7 +5,7 @@ class FirstScreen extends StatefulWidget {
   final Function(bool)? onChanged;
   final bool value;
 
-  const FirstScreen({
+ FirstScreen({
     Key? key,
     required this.value,
     this.onChanged,
@@ -16,12 +16,22 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
+  final TextEditingController loginEmailController = TextEditingController();
+  final TextEditingController loginPassController = TextEditingController();
+  final TextEditingController registerNameController = TextEditingController();
+  final TextEditingController registerEmailController = TextEditingController(); 
+  final TextEditingController registerPassController = TextEditingController();
+  final TextEditingController regisPassConfController = TextEditingController();
+
   bool _obscurePass = true;
   bool _obscureConfPass = true;
+  bool? _previousValue;
 
   Widget _inputEmail ({
     required String text,
     required String hintText,
+    required TextEditingController controller,
+
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,6 +44,7 @@ class _FirstScreenState extends State<FirstScreen> {
         ),
         SizedBox(height: 5),
         TextField(
+          controller: controller,
           style: TextStyle(
             color: Colors.black,
             fontSize: 16
@@ -56,6 +67,7 @@ class _FirstScreenState extends State<FirstScreen> {
     required String text,
     required String hintText,
     required bool obscureText,
+    required TextEditingController controller,
     required VoidCallback toggleVisibility,
   }) {
     return Column(
@@ -69,6 +81,7 @@ class _FirstScreenState extends State<FirstScreen> {
         ),
         SizedBox(height: 5),
         TextField(
+          controller: controller,
           obscureText : obscureText,
           style: TextStyle(
             color: Colors.black,
@@ -96,6 +109,16 @@ class _FirstScreenState extends State<FirstScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.value != _previousValue) {
+      loginEmailController.clear();
+      loginPassController.clear();
+      registerNameController.clear();
+      registerEmailController.clear();
+      registerPassController.clear();
+      regisPassConfController.clear();
+
+      _previousValue = widget.value;
+  }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -195,12 +218,13 @@ class _FirstScreenState extends State<FirstScreen> {
                   child: widget.value
                   ? Column(
                       children: [
-                        _inputEmail(text: 'Email address', hintText: 'Your Email'),
+                        _inputEmail(text: 'Email', hintText: 'Your Email', controller: loginEmailController),
           
                         SizedBox(height: 20),
                         _inputPassword(
                           text: 'Password', 
-                          hintText: 'Password', 
+                          hintText: 'Password',
+                          controller: loginPassController,
                           obscureText: _obscurePass, 
                           toggleVisibility: () {
                             setState(() {
@@ -252,15 +276,17 @@ class _FirstScreenState extends State<FirstScreen> {
                     )
                   : Column(
                       children: [
-                        _inputEmail(text: 'Name', hintText: 'Input your name'),
+                        _inputEmail(text: 'Name', hintText: 'Input your name', controller: registerNameController),
+
 
                         SizedBox(height: 20),
-                        _inputEmail(text: 'Email', hintText: 'example@gmail.com'),
+                        _inputEmail(text: 'Email', hintText: 'example@gmail.com', controller: registerEmailController),
             
                         SizedBox(height: 20),
                         _inputPassword(
                           text: 'Create a password', 
                           hintText: 'must be 8 characters', 
+                          controller: registerPassController,
                           obscureText: _obscurePass, 
                           toggleVisibility: () {
                             setState(() {
@@ -273,6 +299,7 @@ class _FirstScreenState extends State<FirstScreen> {
                         _inputPassword(
                           text: 'Confirm password', 
                           hintText: 'repeat password', 
+                          controller: regisPassConfController,
                           obscureText: _obscureConfPass, 
                           toggleVisibility: () {
                             setState(() {
