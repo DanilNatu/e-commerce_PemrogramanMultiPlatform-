@@ -21,10 +21,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       appBar: AppBar(
         title: Text('Detail Produk'),
         centerTitle: true,
-        elevation: 0,
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
       ),
+      
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -84,7 +83,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   IconButton(
                     icon: Icon(
                       _isfavorite ? Icons.favorite : Icons.favorite_border,
-                      color: _isfavorite ? Colors.red : Colors.grey,
+                      color: _isfavorite ? const Color.fromARGB(255, 242, 15, 83) : Colors.grey,
                     ),
                     onPressed: () {
                       setState(() {
@@ -100,7 +99,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   alignment: WrapAlignment.start,
                   spacing: 8,
                   children: sizes.map((size) {
-                    return ChoiceChip(
+                    return ChoiceChip( 
                       label: Text(size),
                       selected: selectedSize == size,
                       onSelected: (selected) {
@@ -123,7 +122,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 203, 203, 203),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Row(
@@ -174,16 +173,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => KeranjangScreen(),
-                        ),
-                      );
-                    },
+                  SizedBox(
+                    width: 65,
+                    child: IconButton(
+                      icon: const Icon(Icons.shopping_cart, size: 30,),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => KeranjangScreen(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   Expanded(
                     child: ElevatedButton(

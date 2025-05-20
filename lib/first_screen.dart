@@ -118,7 +118,7 @@ class _FirstScreenState extends State<FirstScreen> {
       regisPassConfController.clear();
 
       _previousValue = widget.value;
-  }
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(

@@ -306,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 56,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.black,
+                  color: Color(0xFF7A8AD7),
                   boxShadow: [
                     BoxShadow(color: Colors.black26, blurRadius: 8),
                   ],
