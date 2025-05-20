@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project2/checkout.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class CartItem {
   final String image;
@@ -305,17 +307,34 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                   isBold: true
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF7A8AD7),
-                    minimumSize: const Size(double.infinity, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                
+                SizedBox(
+                  height: 58,
+                  width: double.infinity,
+                  child: SlideAction(
+                    sliderButtonIconSize: 16,
+                    text: ">>>>>> Swipe",
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
+                    outerColor: const Color(0xFF7A8AD7),
+                    innerColor: Colors.white,
+                    elevation: 0,
+                    borderRadius: 35,
+                    onSubmit: () {
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Checkout(),
+                          ),
+                        );
+                      });
+                    },
                   ),
-                  child: const Text('> > > > > > >  Swipe', style: TextStyle(color: Colors.white)),
-                )
+                ),
               ],
             ),
           )

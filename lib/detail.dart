@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project2/keranjang.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class ProductDetailPage extends StatefulWidget {
   @override
@@ -10,20 +11,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   String selectedSize = 'null';
   final List<String> sizes = ['S', 'M', 'L', 'XL'];
   bool _isfavorite = false;
-
   int amount = 1;
 
   @override
   Widget build(BuildContext context) {
-    final double unitPrice = 125.000;
+    final double unitPrice = 125000;
     final double total = unitPrice * amount;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail Produk'),
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
-      
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -39,8 +39,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             Container(
               padding: EdgeInsets.all(10),
               width: double.infinity,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black26)),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black26),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -83,7 +84,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   IconButton(
                     icon: Icon(
                       _isfavorite ? Icons.favorite : Icons.favorite_border,
-                      color: _isfavorite ? const Color.fromARGB(255, 242, 15, 83) : Colors.grey,
+                      color: _isfavorite
+                          ? const Color.fromARGB(255, 242, 15, 83)
+                          : Colors.grey,
                     ),
                     onPressed: () {
                       setState(() {
@@ -99,7 +102,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   alignment: WrapAlignment.start,
                   spacing: 8,
                   children: sizes.map((size) {
-                    return ChoiceChip( 
+                    return ChoiceChip(
                       label: Text(size),
                       selected: selectedSize == size,
                       onSelected: (selected) {
@@ -162,7 +165,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const Spacer(),
                   Text(
-                    'Rp ${total.toStringAsFixed(3)}',
+                    'Rp ${total.toStringAsFixed(0)}',
                     style: const TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontWeight: FontWeight.bold,
@@ -176,7 +179,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   SizedBox(
                     width: 65,
                     child: IconButton(
-                      icon: const Icon(Icons.shopping_cart, size: 30,),
+                      icon: const Icon(Icons.shopping_cart, size: 30),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -188,17 +191,26 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 123, 138, 215),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: SlideAction(
+                      height: 58,
+                      sliderButtonIconSize: 15,
+                      text: ">>>>>> Swipe",
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
                       ),
-                      child: const Text(
-                        "> > > > > > > Swipe",
-                        style: TextStyle(fontSize: 17, color: Colors.white),
-                      ),
+                      outerColor: const Color(0xFF7A8AD7),
+                      innerColor: Colors.white,
+                      onSubmit: () {
+                        Future.delayed(const Duration(milliseconds: 500), () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => KeranjangScreen(),
+                            ),
+                          );
+                        });
+                      },
                     ),
                   ),
                 ],
