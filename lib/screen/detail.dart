@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project2/checkout.dart';
+import 'package:project2/screen/checkout.dart';
 import 'package:project2/screen/keranjang.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:intl/intl.dart';
