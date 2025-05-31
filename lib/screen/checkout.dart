@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project2/screen/alamat.dart';
-import 'package:project2/screen/home.dart';
+import 'package:project2/widget/bottonNavigation.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 class CartItem {
@@ -444,6 +444,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
 
             _itemcheckout(
+              label: 'Metode Pembayaran', 
+              text: selectedPembayaran.isEmpty ? Text('Pilih Metode Pembayaran') : Text(selectedPembayaran), 
+              contentColor: selectedPembayaran.isEmpty ? Colors.grey : Colors.black, 
+              onTap: () {
+                showSelectionModal(
+                  context: context, 
+                  title: 'Pilih Metode Pembayaran', 
+                  items: metodePembayaran, 
+                  onItemSelected: (metode) {
+                    setState(() {
+                      selectedPembayaran = metode;
+                    });
+                  }
+                );
+              }
+            ),
+
+            _itemcheckout(
               label: 'Metode Pengiriman', 
               text: selectedPengiriman.isEmpty ? const Text('Pilih Metode Pengiriman') : Text(selectedPengiriman), 
               contentColor: selectedPengiriman.isEmpty ? Colors.grey : Colors.black, 
@@ -666,97 +684,103 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: SlideAction(
-                    height: 58,
-                    sliderButtonIconSize: 16,
-                    text: ">>>>>> Swipe",
-                    textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    outerColor: const Color(0xFF7A8AD7),
-                    innerColor: Colors.white,
-                    borderRadius: 35,
-                    onSubmit: () async {
-                      await Future.delayed(const Duration(milliseconds: 500), () {
-                        showDialog(
-                          barrierDismissible: false,
-                          // ignore: use_build_context_synchronously
-                          context: context, 
-                          builder: (context) {
-                            return Dialog(
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(vertical: 50),
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 123, 138, 215),
-                                  borderRadius: BorderRadius.circular(15)
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/Sukses.png',
-                                      height: 150,
+                  child: AbsorbPointer(
+                    absorbing: selectedPembayaran.isEmpty || selectedPengiriman.isEmpty,
+                    child: Opacity(
+                      opacity: selectedPembayaran.isEmpty || selectedPengiriman.isEmpty ? 0.5 : 1.0,
+                      child: SlideAction(
+                        height: 58,
+                        sliderButtonIconSize: 16,
+                        text: ">>>>>> Swipe",
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        outerColor: const Color(0xFF7A8AD7),
+                        innerColor: Colors.white,
+                        borderRadius: 35,
+                        onSubmit: () async {
+                          await Future.delayed(const Duration(milliseconds: 500), () {
+                            showDialog(
+                              barrierDismissible: false,
+                              // ignore: use_build_context_synchronously
+                              context: context, 
+                              builder: (context) {
+                                return Dialog(
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(vertical: 50),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(255, 123, 138, 215),
+                                      borderRadius: BorderRadius.circular(15)
                                     ),
-                                    const SizedBox(height: 20),
-                                    const Text(
-                                      'Pembelian\nSukses',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30,
-                                      ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/Sukses.png',
+                                          height: 150,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        const Text(
+                                          'Pembelian\nSukses',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 35),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            minimumSize: const Size(250, 50),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(13), 
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context, 
+                                              MaterialPageRoute(builder: (context) => const BottonNavigation()),
+                                            );
+                                          }, 
+                                          child: const Text(
+                                            'Lanjut Belanja',
+                                            style: TextStyle(
+                                              color: Color.fromARGB(255, 123, 138, 215),
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        ),
+                                        const SizedBox(height: 15),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            'Lihat Detail Belanja',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    const SizedBox(height: 35),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        minimumSize: const Size(250, 50),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(13), 
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context, 
-                                          MaterialPageRoute(builder: (context) => const HomeScreen()),
-                                        );
-                                      }, 
-                                      child: const Text(
-                                        'Lanjut Belanja',
-                                        style: TextStyle(
-                                          color: Color.fromARGB(255, 123, 138, 215),
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    ),
-                                    const SizedBox(height: 15),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text(
-                                        'Lihat Detail Belanja',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 17,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              }
                             );
-                          }
-                        );
-                      });
-                    },
+                          });
+                        },
+                      ),
+                    ),
                   ),
                 ),
               ],

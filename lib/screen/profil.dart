@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project2/screen/alamat.dart';
 import 'package:project2/screen/favorite.dart';
 import 'package:project2/screen/first.dart';
@@ -12,6 +15,17 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
   late String userName;
   late String userEmail;
   late String userNomor;
@@ -168,15 +182,17 @@ class _ProfilScreenState extends State<ProfilScreen> {
                               Stack(
                                 alignment: Alignment.topRight,
                                 children: [
-                                  const CircleAvatar(
+                                  CircleAvatar(
                                     radius: 100,
-                                    foregroundImage: AssetImage('assets/images/Avatar.png'),
+                                    backgroundImage: _imageFile != null
+                                      ? FileImage(_imageFile!)
+                                      : const AssetImage('assets/images/default_profile.png') as ImageProvider,
                                   ),
                                   Positioned(
                                     top: 0,
                                     right: 15,
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: _pickImage,
                                       child: Container(
                                         padding: const EdgeInsets.all(6),
                                         decoration: const BoxDecoration(

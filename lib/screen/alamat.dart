@@ -211,7 +211,7 @@ class _AlamatScreenState extends State<AlamatScreen> {
                       child: GestureDetector(
                         onTap: () {
                           showAlamatBottomSheet(
-                              existingAlamat: location, index: index);
+                            existingAlamat: location, index: index);
                         },
                         child: Container(
                           width: double.infinity,
@@ -328,72 +328,77 @@ class _AlamatScreenState extends State<AlamatScreen> {
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        return FractionallySizedBox(
-          heightFactor: 0.60,
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Form Alamat',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: FractionallySizedBox(
+            heightFactor: 0.60,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      'Form Alamat',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const Divider(thickness: 2),
-              tambahAlamat(
-                controller: namaController,
-                text: 'Nama',
-                hintText: 'Masukkan Nama',
-              ),
-              tambahAlamat(
-                controller: phoneController,
-                text: 'Nomor Telepon',
-                hintText: '08xxxx',
-              ),
-              tambahAlamat(
-                controller: alamatController,
-                text: 'Alamat',
-                hintText: 'Masukkan Alamat Lengkap',
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 123, 138, 215),
-                  fixedSize: const Size(370, 45),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(17),
+                  const Divider(thickness: 2),
+                  tambahAlamat(
+                    controller: namaController,
+                    text: 'Nama',
+                    hintText: 'Masukkan Nama',
                   ),
-                ),
-                onPressed: () {
-                  final newAlamat = Alamat(
-                    nama: namaController.text,
-                    nomor: phoneController.text,
-                    alamat: alamatController.text,
-                  );
-
-                  setState(() {
-                    if (editingIndex != null) {
-                      locations[editingIndex!] = newAlamat;
-                    } else {
-                      locations.add(newAlamat);
-                    }
-                  });
-
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  editingIndex != null ? 'Simpan Perubahan' : 'Tambahkan',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 17,
+                  tambahAlamat(
+                    controller: phoneController,
+                    text: 'Nomor Telepon',
+                    hintText: '08xxxx',
                   ),
-                ),
+                  tambahAlamat(
+                    controller: alamatController,
+                    text: 'Alamat',
+                    hintText: 'Masukkan Alamat Lengkap',
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 123, 138, 215),
+                      fixedSize: const Size(370, 45),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(17),
+                      ),
+                    ),
+                    onPressed: () {
+                      final newAlamat = Alamat(
+                        nama: namaController.text,
+                        nomor: phoneController.text,
+                        alamat: alamatController.text,
+                      );
+                        
+                      setState(() {
+                        if (editingIndex != null) {
+                          locations[editingIndex!] = newAlamat;
+                        } else {
+                          locations.add(newAlamat);
+                        }
+                      });
+                        
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      editingIndex != null ? 'Simpan Perubahan' : 'Tambahkan',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         );
       },
