@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project2/alamat.dart';
-import 'package:project2/favorite.dart';
-import 'package:project2/history.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
+import 'package:project2/screen/alamat.dart';
 import 'package:project2/screen/detail.dart';
+import 'package:project2/screen/favorite.dart';
+import 'package:project2/screen/history.dart';
 
 class ProdukItem {
   final String kategori;

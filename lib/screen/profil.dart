@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project2/alamat.dart';
-import 'package:project2/favorite.dart';
+import 'package:project2/screen/alamat.dart';
+import 'package:project2/screen/favorite.dart';
 import 'package:project2/screen/first.dart';
 import 'package:project2/screen/history.dart';
 
