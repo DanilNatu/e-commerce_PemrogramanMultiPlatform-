@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project2/alamat.dart';
-import 'package:project2/detail.dart';
 import 'package:project2/favorite.dart';
 import 'package:project2/history.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
+import 'package:project2/screen/detail.dart';
 
 class ProdukItem {
   final String kategori;
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const DetailScreen(isInitiallyFavorite: false,)),
+          MaterialPageRoute(builder: (context) => DetailScreen(isInitiallyFavorite: false)),
         );
       },
       child: Container(

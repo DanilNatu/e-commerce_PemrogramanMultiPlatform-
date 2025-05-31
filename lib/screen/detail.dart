@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project2/keranjang.dart';
+import 'package:project2/screen/keranjang.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
-class ProductDetailPage extends StatefulWidget {
+class DetailScreen extends StatefulWidget {
   @override
-  _ProductDetailPageState createState() => _ProductDetailPageState();
+  _DetailScreenState createState() => _DetailScreenState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
+class _DetailScreenState extends State<DetailScreen> {
   String selectedSize = 'null';
   final List<String> sizes = ['S', 'M', 'L', 'XL'];
   bool _isfavorite = false;

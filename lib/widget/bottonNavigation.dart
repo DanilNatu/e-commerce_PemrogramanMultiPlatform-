@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project2/home_screen.dart';
 import 'package:project2/keranjang.dart';
-import 'package:project2/profil.dart';
+import 'package:project2/screen/home.dart';
+import 'package:project2/screen/profil.dart';
 
 class BottonNavigation extends StatefulWidget {
   const BottonNavigation({super.key});

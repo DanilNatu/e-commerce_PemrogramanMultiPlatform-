@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:project2/home_screen.dart';
+import 'package:project2/Widget/BottonNavigation.dart';
 
 class FirstScreen extends StatefulWidget {
   final Function(bool)? onChanged;
   final bool value;
 
- FirstScreen({
-    Key? key,
+ const FirstScreen({
+    super.key,
     required this.value,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<FirstScreen> createState() => _FirstScreenState();
@@ -31,27 +31,26 @@ class _FirstScreenState extends State<FirstScreen> {
     required String text,
     required String hintText,
     required TextEditingController controller,
-
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 17
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         TextField(
           controller: controller,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 16
           ),
           decoration: InputDecoration(
             hintText: hintText, 
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey
             ),
             border: OutlineInputBorder(
@@ -75,21 +74,21 @@ class _FirstScreenState extends State<FirstScreen> {
       children: [
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 17
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         TextField(
           controller: controller,
           obscureText : obscureText,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
           ),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.grey
             ),
             border: OutlineInputBorder(
@@ -125,7 +124,7 @@ class _FirstScreenState extends State<FirstScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 75),
+              const SizedBox(height: 75),
           
               Center(
                 child: Image.asset(
@@ -146,10 +145,10 @@ class _FirstScreenState extends State<FirstScreen> {
                     children: [
                       // Bagian yang bergerak
                       AnimatedAlign(
-                        duration: Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 200),
                         alignment: widget.value ? Alignment.centerLeft : Alignment.centerRight,
                         child: Padding(
-                          padding: EdgeInsets.all(4),
+                          padding: const EdgeInsets.all(4),
                           child: Container(
                             width: 170,
                             height: 35,
@@ -160,7 +159,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.2),
                                   blurRadius: 4,
-                                  offset: Offset(0, 2),
+                                  offset: const Offset(0, 2),
                                 ),
                               ],
                             ),
@@ -212,15 +211,15 @@ class _FirstScreenState extends State<FirstScreen> {
               ),
           
               Padding(
-                padding: EdgeInsets.all(31),
+                padding: const EdgeInsets.all(31),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: widget.value
                   ? Column(
                       children: [
-                        _inputEmail(text: 'Email', hintText: 'Your Email', controller: loginEmailController),
+                        _inputEmail(text: 'Email', hintText: 'Input Email', controller: loginEmailController),
           
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         _inputPassword(
                           text: 'Password', 
                           hintText: 'Password',
@@ -233,23 +232,23 @@ class _FirstScreenState extends State<FirstScreen> {
                           }
                         ),
           
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
                               onTap: () {},
-                              child: Text('Forget password?'),
+                              child: const Text('Forget password?'),
                             )
                           ],
                         ),
           
-                        SizedBox(height: 200),
+                        const SizedBox(height: 200),
                         Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color.fromARGB(255, 123, 138, 215),
-                              minimumSize: Size(330, 45),
+                              minimumSize: const Size(330, 45),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(17), 
                               ),
@@ -258,12 +257,12 @@ class _FirstScreenState extends State<FirstScreen> {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: ((context) => HomeScreen())
+                                  builder: ((context) => const BottonNavigation()),
                                 ),
                                 (route) => false
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Log IN',
                               style: TextStyle(
                                 color: Colors.white,
@@ -276,16 +275,16 @@ class _FirstScreenState extends State<FirstScreen> {
                     )
                   : Column(
                       children: [
-                        _inputEmail(text: 'Name', hintText: 'Input your name', controller: registerNameController),
+                        _inputEmail(text: 'Name', hintText: 'Input Nama', controller: registerNameController),
 
 
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         _inputEmail(text: 'Email', hintText: 'example@gmail.com', controller: registerEmailController),
             
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         _inputPassword(
-                          text: 'Create a password', 
-                          hintText: 'must be 8 characters', 
+                          text: 'Buat Password', 
+                          hintText: 'Minimal 8 Karakter', 
                           controller: registerPassController,
                           obscureText: _obscurePass, 
                           toggleVisibility: () {
@@ -295,10 +294,10 @@ class _FirstScreenState extends State<FirstScreen> {
                           }
                         ),
             
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         _inputPassword(
-                          text: 'Confirm password', 
-                          hintText: 'repeat password', 
+                          text: 'Konfimasi Password', 
+                          hintText: 'Input Ulang Password', 
                           controller: regisPassConfController,
                           obscureText: _obscureConfPass, 
                           toggleVisibility: () {
@@ -308,12 +307,12 @@ class _FirstScreenState extends State<FirstScreen> {
                           }
                         ),
 
-                        SizedBox(height: 35),
+                        const SizedBox(height: 35),
                         Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color.fromARGB(255, 123, 138, 215),
-                              minimumSize: Size(330, 45),
+                              minimumSize: const Size(330, 45),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(17), 
                               ),
@@ -321,7 +320,7 @@ class _FirstScreenState extends State<FirstScreen> {
                             onPressed: () {
                               widget.onChanged?.call(true);
                             }, 
-                            child: Text(
+                            child: const Text(
                               'Register',
                               style: TextStyle(
                                 color: Colors.white,
@@ -331,17 +330,17 @@ class _FirstScreenState extends State<FirstScreen> {
                           ),
                         ),
 
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Already have an acount? '),
+                            const Text('Already have an acount? '),
 
                             GestureDetector(
                               onTap: () {
                                 widget.onChanged?.call(true);
                               },
-                              child: Text(
+                              child: const Text(
                                 'Log in',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
