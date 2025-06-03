@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project2/screen/alamat.dart';
 import 'package:project2/screen/favorite.dart';
 import 'package:project2/screen/first.dart';
 import 'package:project2/screen/history.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilScreen extends StatefulWidget {
   const ProfilScreen({super.key});
@@ -12,6 +15,68 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
+  File? imageGallery;
+  File? imageCamera;
+  File? activeImage;
+  
+  Future getImageGallery () async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? imagePicked = await picker.pickImage(source: ImageSource.gallery);
+
+    if (imagePicked != null) {
+      setState(() {
+        imageGallery = File(imagePicked.path);
+        activeImage = imageGallery;
+      });
+    } 
+  }
+
+  Future getImageCamera () async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? imagePicked = await picker.pickImage(source: ImageSource.camera);
+
+    if (imagePicked != null) {
+      setState(() {
+        imageCamera = File(imagePicked.path);
+        activeImage = imageCamera;
+      });
+    }
+  }
+
+  void clearImage() {
+    setState(() {
+      imageGallery = null;
+      imageCamera = null;
+      activeImage = null;
+    });
+  }
+
+  Widget imagePicker ({
+    required VoidCallback onTap,
+    required String text,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: double.infinity,
+        child: Card(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: Color(0xFF7A8AD7),
+                fontSize: 20,
+                fontWeight: FontWeight.w600
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   late String userName;
   late String userEmail;
   late String userNomor;
@@ -55,6 +120,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
       child: SizedBox(
         width: double.infinity,
         child: Card(
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.only(top: 15, bottom: 15, right: 10),
             child: Row(
@@ -146,6 +212,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 222, 221, 221),
       body: SafeArea(
@@ -158,6 +225,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: Card(
+                    color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                       child: Column(
@@ -168,15 +236,152 @@ class _ProfilScreenState extends State<ProfilScreen> {
                               Stack(
                                 alignment: Alignment.topRight,
                                 children: [
-                                  CircleAvatar(
-                                    radius: 100,
-                                    foregroundImage: AssetImage('assets/images/Avatar.png'),
+                                  Container(
+                                    height: 200,
+                                    width: 200,
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 222, 221, 221),
+                                      shape: BoxShape.circle
+                                    ),
+                                    child: ClipOval(
+                                      child: activeImage != null
+                                        ? Image.file(
+                                            activeImage!,
+                                            fit: BoxFit.cover,
+                                            width: 200,
+                                            height: 200,
+                                          )
+                                        : const Icon(
+                                            Icons.person,
+                                            size: 120,
+                                            color: Colors.grey,
+                                          ),
+                                    ),
                                   ),
                                   Positioned(
                                     top: 0,
                                     right: 15,
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          backgroundColor: const Color.fromARGB(255, 222, 221, 221),
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                          ),
+                                          builder: (context) {
+                                            return FractionallySizedBox (
+                                              alignment: Alignment.topLeft,
+                                              widthFactor: 1.0,
+                                              heightFactor: activeImage != null ? 0.415 : 0.3,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(10),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    if (activeImage != null)
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(right: 5, bottom: 5),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                          children: [
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                showDialog(
+                                                                  context: context,
+                                                                  builder: (context) => AlertDialog(
+                                                                    title: const Text(
+                                                                      'Apa Anda Yakin Mengapus Gambar?',
+                                                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                                                    ),
+                                                                    actions: [
+                                                                      const Divider(),
+                                                                      Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                                        children: [
+                                                                          TextButton(
+                                                                              style: TextButton.styleFrom(
+                                                                                backgroundColor: const Color.fromARGB(255, 60, 60, 60),
+                                                                                foregroundColor: Colors.white,
+                                                                                textStyle: const TextStyle(fontSize: 16),
+                                                                                fixedSize: const Size(100, 40),
+                                                                              ),
+                                                                              onPressed: () => Navigator.of(context).pop(),
+                                                                              child: const Text('Batal')),
+                                                                          const SizedBox(width: 10),
+                                                                          TextButton(
+                                                                              style: TextButton.styleFrom(
+                                                                                backgroundColor: Colors.red,
+                                                                                foregroundColor: Colors.white,
+                                                                                textStyle: const TextStyle(fontSize: 16),
+                                                                                fixedSize: const Size(100, 40),
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                clearImage();
+                                                                                  
+                                                                                Navigator.of(context).pop();
+                                                                                Navigator.of(context).pop();
+                                                                              },
+                                                                              child: const Text('Hapus')),
+                                                                        ],
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                width: 150,
+                                                                height: 50,
+                                                                decoration: BoxDecoration(
+                                                                  color: Colors.white,
+                                                                  borderRadius: BorderRadius.circular(12)
+                                                                ),
+                                                                child: const Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Icon(Icons.delete, color: Colors.red,),
+                                                                    Text(
+                                                                      'Hapus Gambar',
+                                                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+
+                                                    imagePicker(
+                                                      onTap: () async{
+                                                        await getImageGallery();
+
+                                                        if (activeImage != null) {
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.of(context).pop();
+                                                        }  
+                                                      }, 
+                                                      text: 'Pilih Gambar'
+                                                    ),
+
+                                                    imagePicker(
+                                                      onTap: () async{
+                                                        await getImageCamera();
+
+                                                        if (activeImage != null) {
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.of(context).pop();
+                                                        }  
+                                                      },
+                                                      text: 'Ambil Gambar'
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        );
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.all(6),
                                         decoration: const BoxDecoration(
@@ -272,10 +477,10 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
+                      backgroundColor: const Color.fromARGB(255, 222, 221, 221),
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                       ),
-                      backgroundColor: Colors.white,
                       builder: (context) {
                         return FractionallySizedBox(
                           heightFactor: 0.4,

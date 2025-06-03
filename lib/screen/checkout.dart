@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project2/screen/alamat.dart';
+import 'package:project2/screen/history.dart';
 import 'package:project2/widget/bottonNavigation.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
@@ -75,7 +76,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     ),
   ];
 
-  List<String> metodePembayaran = ['Bank BCA (232362543254)', 'Bank BRI', 'Bank BNI'];
+  List<String> metodePembayaran = ['Bank BCA (232362543254)', 'Bank BRI (1654745468)', 'Bank BNI (451414676)'];
   String selectedPembayaran = '';
 
   List<String> metodePengiriman = ['Jnt Standard | 3-4 days', 'SiCepat | 5-6 days', 'JnE | 3-5 days'];
@@ -160,8 +161,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: DefaultTextStyle(
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 129, 129, 129), 
+                    style: TextStyle(
+                      color: contentColor, 
                       fontSize: 16
                     ), 
                     child: text
@@ -288,17 +289,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: const Color.fromARGB(255, 222, 221, 221),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      backgroundColor: Colors.white,
       builder: (context) {
         return FractionallySizedBox(
           heightFactor: 0.35,
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15),
+                padding: const EdgeInsets.only(left: 15,),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -328,9 +329,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 child: ListView(
                   children: items.map((item) {
                     return ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                       title: Card(
+                        margin: EdgeInsets.zero,
+                        color: Colors.white,
                         child: Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(15),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -396,25 +400,50 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: Colors.red,
+                    const SizedBox(
+                      width: 30,
+                      child: Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          selectedAlamat.nama,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              selectedAlamat.nama,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 21,
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 7),
+                              child: Text(
+                                '|',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 129, 129, 129),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              selectedAlamat.nomor,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 129, 129, 129),
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 5),
-                        
-                        Text(selectedAlamat.nomor),
-                        Text(selectedAlamat.alamat),
+                        const SizedBox(height: 10),
+                        Text(
+                          selectedAlamat.alamat,
+                          style: const TextStyle(fontSize: 16),
+                        ),
                       ],
                     ),
                   ],
@@ -445,7 +474,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
             _itemcheckout(
               label: 'Metode Pembayaran', 
-              text: selectedPembayaran.isEmpty ? Text('Pilih Metode Pembayaran') : Text(selectedPembayaran), 
+              text: selectedPembayaran.isEmpty ? const Text('Pilih Metode Pembayaran') : Text(selectedPembayaran), 
               contentColor: selectedPembayaran.isEmpty ? Colors.grey : Colors.black, 
               onTap: () {
                 showSelectionModal(
@@ -487,10 +516,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
+                  backgroundColor:  const Color.fromARGB(255, 222, 221, 221),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                   ),
-                  backgroundColor: Colors.white,
                   builder: (context) {
                     final List<String> tempSelected = List.from(selectedVouchers);
                     return StatefulBuilder(
@@ -744,9 +773,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            Navigator.push(
+                                            Navigator.pushAndRemoveUntil(
                                               context, 
                                               MaterialPageRoute(builder: (context) => const BottonNavigation()),
+                                              (route) => false,
                                             );
                                           }, 
                                           child: const Text(
@@ -761,7 +791,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         const SizedBox(height: 15),
                                         GestureDetector(
                                           onTap: () {
-                                            Navigator.of(context).pop();
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => const HistoryScreen(),
+                                              ),
+                                              (route) => route.isFirst,
+                                            );
                                           },
                                           child: const Text(
                                             'Lihat Detail Belanja',
