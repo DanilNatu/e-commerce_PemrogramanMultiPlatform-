@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailScreen(isInitiallyFavorite: false)),
+          MaterialPageRoute(builder: (context) => const DetailScreen(isInitiallyFavorite: false)),
         );
       },
       child: Container(

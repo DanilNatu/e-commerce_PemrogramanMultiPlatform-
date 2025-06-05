@@ -263,7 +263,7 @@ class _FirstScreenState extends State<FirstScreen> {
                               );
                             },
                             child: const Text(
-                              'Log IN',
+                              'Login',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 17,
@@ -275,7 +275,7 @@ class _FirstScreenState extends State<FirstScreen> {
                     )
                   : Column(
                       children: [
-                        _inputEmail(text: 'Name', hintText: 'Input Nama', controller: registerNameController),
+                        _inputEmail(text: 'Nama', hintText: 'Input Nama', controller: registerNameController),
 
 
                         const SizedBox(height: 20),
@@ -341,7 +341,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                 widget.onChanged?.call(true);
                               },
                               child: const Text(
-                                'Log in',
+                                'Login',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
