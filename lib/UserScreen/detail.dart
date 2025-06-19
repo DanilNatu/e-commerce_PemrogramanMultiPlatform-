@@ -356,7 +356,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             final result = await client.mutate(
                               MutationOptions(
                                 document: gql(FavoriteMutations.delete),
-                                variables: {"idFavorite": _currentIdFavorite}, //<--- pakai idFavorite dari state
+                                variables: {"id_favorite": _currentIdFavorite}, //<--- pakai idFavorite dari state
                               ),
                             );
 
