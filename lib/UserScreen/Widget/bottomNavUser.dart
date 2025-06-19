@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:project2/screen/home.dart';
-import 'package:project2/screen/keranjang.dart';
-import 'package:project2/screen/profil.dart';
+import 'package:project2/UserScreen/home.dart';
+import 'package:project2/UserScreen/keranjang.dart';
+import 'package:project2/UserScreen/profil.dart';
 
 class BottonNavigation extends StatefulWidget {
-  const BottonNavigation({super.key});
+  final int idUser;
+  const BottonNavigation({super.key, required this.idUser});
 
   @override
   State<BottonNavigation> createState() => _BottonNavigationState();
@@ -13,9 +14,9 @@ class BottonNavigation extends StatefulWidget {
 class _BottonNavigationState extends State<BottonNavigation> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const ProfilScreen(),
+  List<Widget> get _screens => [
+    HomeScreen(idUser: widget.idUser),
+    ProfilScreen(idUser: widget.idUser,),
   ];
 
   void _onTabTapped(int index) {
@@ -52,11 +53,14 @@ class _BottonNavigationState extends State<BottonNavigation> {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () async{
+                        await Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const KeranjangScreen()),
+                          MaterialPageRoute(builder: (context) => KeranjangScreen(idUser: widget.idUser,)),
                         );
+                        setState(() {
+                          
+                        });
                       },
                       child: const Icon(Icons.shopping_cart),
                     ),

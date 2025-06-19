@@ -1,0 +1,36 @@
+class CheckoutQueries {
+  static const String getAll = """
+    query{
+      checkouts{
+        id_checkout
+        id_user
+        id_product
+        id_keranjang
+        id_alamat
+        jumlah
+        metode_pengiriman
+        pembayaran
+        sizeP
+        product{
+          id_product
+          image
+          name
+          price
+          warna
+          stok
+        }
+        alamat{
+          namaA
+          alamat
+          teleponA
+          alamat_utama
+        }
+        keranjang{
+          id_product
+          sizeK
+          jumlah
+        }
+      }
+    }
+  """;
+}
